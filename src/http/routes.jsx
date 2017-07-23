@@ -4,7 +4,7 @@ import { createStore } from 'redux'
 import ReactDOMServer from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import { Provider } from 'react-redux'
-import App from '../views/app.jsx'
+import App from './components/app'
 
 const router = Router()
 

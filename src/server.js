@@ -1,10 +1,14 @@
 import express from 'express'
-import Routes from './routes'
+import ApiRoutes from './api/routes'
+import HttpRoutes from './http/routes'
 
 const app = express()
 
-app.use(express.static('public'))
-app.use(Routes)
+app.use(express.static('static'))
+
+app.use('/api/v1', ApiRoutes)
+
+app.use(HttpRoutes)
 
 const PORT = process.env.NODE_ENV || 3000
 app.listen(PORT, () => {
