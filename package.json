@@ -4,7 +4,10 @@
   "description": "Simple boilerplate designed for universal React applications.",
   "author": "David Hewitt <hello@wp-unite.io>",
   "scripts": {
-    "start": "webpack && node ./src/server.js",
+    "start": "node ./dist/server.js",
+    "build": "npm run build:server && npm run build:client",
+    "build:server": "babel src -d dist",
+    "build:client": "webpack",
     "dev": "npm-run-all --parallel watch:*",
     "watch:webpack": "webpack -w",
     "watch:server": "nodemon ./src/server.js --exec babel-node --ext js,jsx --ignore public/"
@@ -25,12 +28,14 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "express": "4.13.4",
+    "morgan": "^1.9.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "4.4.6",
     "react-router": "^4.1.2",
     "react-router-dom": "^4.1.2",
     "redux": "^3.7.2",
+    "spdy": "^3.4.7",
     "webpack": "^3.3.0"
   },
   "devDependencies": {
