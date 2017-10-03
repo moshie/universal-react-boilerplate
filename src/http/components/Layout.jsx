@@ -9,7 +9,7 @@ class Layout extends React.Component {
     render() {
         var custom = this.props.custom
         return (
-            <html>
+            <html lang="en">
                 <head>
                     <title>{custom.title}</title>
                     <link rel='stylesheet' href='/style.css' />
