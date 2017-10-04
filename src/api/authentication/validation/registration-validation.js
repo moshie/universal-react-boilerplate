@@ -1,5 +1,6 @@
 const { check } = require('express-validator/check')
 const { matchedData, sanitize } = require('express-validator/filter')
+const passwordConfirmation = require('./rules/password-confirmation')
 
 export default [
     check('email')
@@ -16,5 +17,5 @@ export default [
 
     check('password_confirmation')
         .exists()
-        .custom((value, { req }) => value === req.body.password)
+        .custom(passwordConfirmation)
 ]
