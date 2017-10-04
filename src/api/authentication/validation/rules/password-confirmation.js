@@ -1,1 +1,0 @@
-export default (value, { req }) => value === req.body.password

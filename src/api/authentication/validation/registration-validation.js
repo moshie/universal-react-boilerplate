@@ -1,6 +1,7 @@
-const { check } = require('express-validator/check')
-const { matchedData, sanitize } = require('express-validator/filter')
-const passwordConfirmation = require('./rules/password-confirmation')
+import { check } from 'express-validator/check'
+import { matchedData, sanitize } from 'express-validator/filter'
+
+import equals from './rules/equals'
 
 export default [
     check('email')
@@ -17,5 +18,5 @@ export default [
 
     check('password_confirmation')
         .exists()
-        .custom(passwordConfirmation)
+        .custom((value, { req }) => equals(value, req.body.password))
 ]
