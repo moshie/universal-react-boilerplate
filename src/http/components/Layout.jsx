@@ -12,7 +12,7 @@ class Layout extends React.Component {
             <html lang="en">
                 <head>
                     <title>{custom.title}</title>
-                    <link rel='stylesheet' href='/style.css' />
+                    <link rel="stylesheet" href="/style.css" />
                 </head>
                 <body>
                     <h1>{custom.title}</h1>
@@ -21,16 +21,16 @@ class Layout extends React.Component {
                     {this.props.children}
                     <ul>
                         <li>
-                            <Link to='/'>Home</Link>
+                            <Link to="/">Home</Link>
                         </li>
                         <li>
-                            <Link to='/about'>About</Link>
+                            <Link to="/about">About</Link>
                         </li>
                     </ul>
                     <script dangerouslySetInnerHTML={{
                         __html: 'window.PROPS=' + JSON.stringify(custom)
                     }} />
-                    <script src='/bundle.js' />
+                    <script src="/bundle.js" />
                 </body>
             </html>
         )
