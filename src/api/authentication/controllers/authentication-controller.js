@@ -1,29 +1,25 @@
 import { validationResult } from 'express-validator/check'
-import User from '../models/User'
+import authenticate from '../authenticate'
 
 export default (request, response) => {
     const errors = validationResult(request)
 
     if (!errors.isEmpty()) {
-        // TODO: Create a response class to handle validation errors
         return response.status(422).json({
             errors: errors.mapped() 
         })
     }
 
-    delete request.body.password_confirmation
-
-    var user = new User(request.body)
-
-    user.save()
-        .then((doc) => {
+    authenticate(request.body.email, request.body.password)
+        .then((token) => {
             response.json({
-                message: `${doc.fullname()} has been Saved successfully!`
+                status: 'ok',
+                token
             })
         })
         .catch((error) => {
-            response.status(500).json({
-                message: error.message
+            response.status(400).json({
+                status: error.message
             })
         })
 

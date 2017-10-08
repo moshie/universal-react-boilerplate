@@ -6,15 +6,20 @@ import http2 from 'spdy'
 import { port, key, cert, db } from './config'
 import ApiRoutes from './api/routes'
 import HttpRoutes from './http/routes'
+import Promise from 'bluebird'
 
 // Boot app
 const app = express()
+
+// Set promise agent
+global.Promise = Promise
 
 // Logger
 app.use(morgan('dev'))
 
 // Database
 mongoose.connect(db, { useMongoClient: true })
+mongoose.Promise = global.Promise
 
 // Http request parser
 app.use(bodyParser.urlencoded({ extended: false }))
