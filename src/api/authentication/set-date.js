@@ -1,14 +1,12 @@
 function setDate(model = {}) {
 
-    var data = {
-        updated_at: new Date()
-    }
+    model.updated_at = new Date()
 
     if (!model.created_at) {
-        data.created_at = data.updated_at
+        model.created_at = model.updated_at
     }
 
-    return data
+    return model
 }
 
 export default setDate

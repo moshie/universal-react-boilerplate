@@ -13,6 +13,6 @@ const router = Router()
 router.post('/register', ValidateRegistration, RegistrationController)
 router.post('/login', ValidateLogin, AuthenticationController)
 
-router.post('/send-confirmation', ValidateLogin, AuthenticationController)
+//router.post('/send-confirmation', ValidateLogin, AuthenticationController)
 
 export default router

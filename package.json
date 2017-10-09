@@ -10,7 +10,8 @@
     "build:client": "webpack",
     "dev": "npm-run-all --parallel watch:*",
     "watch:webpack": "webpack -w",
-    "watch:server": "nodemon ./src/server.js --exec babel-node --ext js,jsx --ignore public/"
+    "watch:server": "nodemon ./src/server.js --exec babel-node --ext js,jsx --ignore public/",
+    "test": "mocha ./src/**/*.spec.js --require babel-core/register"
   },
   "main": "server.js",
   "keywords": [
@@ -46,6 +47,9 @@
     "webpack": "^3.3.0"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-datetime": "^1.5.0",
+    "mocha": "^4.0.1",
     "nodemon": "1.11.0",
     "npm-run-all": "3.1.2"
   },
