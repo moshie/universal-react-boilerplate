@@ -9,4 +9,8 @@ exports.key = fs.readFileSync(path.resolve(__dirname, '..', './server.key'))
 
 exports.cert = fs.readFileSync(path.resolve(__dirname, '..', './server.crt'))
 
-exports.db = process.env.MONGODB || 'mongodb://127.0.0.1:27017/test'
+exports.db = {
+    production: process.env.MONGODB || 'mongodb://127.0.0.1:27017/production',
+    staging: process.env.MONGODB || 'mongodb://127.0.0.1:27017/staging',
+    testing: 'mongodb://127.0.0.1:27017/testing'
+}

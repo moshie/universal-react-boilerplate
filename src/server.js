@@ -18,7 +18,7 @@ global.Promise = Promise
 app.use(morgan('dev'))
 
 // Database
-mongoose.connect(db, { useMongoClient: true })
+mongoose.connect(db.production, { useMongoClient: true })
 mongoose.Promise = global.Promise
 
 // Http request parser
