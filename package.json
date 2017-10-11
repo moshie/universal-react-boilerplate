@@ -11,7 +11,7 @@
     "dev": "npm-run-all --parallel watch:*",
     "watch:webpack": "webpack -w",
     "watch:server": "nodemon ./src/server.js --exec babel-node --ext js,jsx --ignore public/",
-    "test": "mocha ./src/**/*.spec.js --require babel-core/register --timeout 15000 --exit"
+    "test": "mocha --recursive --require babel-core/register --exit"
   },
   "main": "server.js",
   "keywords": [

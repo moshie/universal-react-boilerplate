@@ -1,1 +1,1 @@
-export default (value, requestValue) => value === requestValue
+export default (...args) =>  !!(args || []).reduce((a, b) => (a === b) ? a : NaN)
