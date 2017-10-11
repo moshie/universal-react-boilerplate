@@ -8,6 +8,15 @@ describe('Authentication', () => {
 
     describe('#setDate()', () => {
 
+        it('should throw an error if incorrect argument passed', () => {
+            expect(() => setDate([])).to.throw(Error)
+            expect(() => setDate(12)).to.throw(Error)
+            expect(() => setDate(null)).to.throw(Error)
+            expect(() => setDate(true)).to.throw(Error)
+            expect(() => setDate(undefined)).to.not.throw(Error)
+            expect(() => setDate({})).to.not.throw(Error)
+        })
+
         it('should return an object with created_at and updated_at', () => {
             let model = setDate()
 

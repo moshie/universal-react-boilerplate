@@ -1,4 +1,7 @@
 function setDate(model = {}) {
+    if (Array.isArray(model) || typeof model != 'object') {
+        throw new Error('Unexpected Argument')
+    }
 
     model.updated_at = new Date()
 

@@ -3,6 +3,7 @@ import { expect } from 'chai'
 import getUser from './get-user'
 import mongoose from 'mongoose'
 import User from './models/User'
+import sinon from 'sinon'
 
 import mochaMongoose from 'mocha-mongoose'
 const clearDB = mochaMongoose(db.testing)
