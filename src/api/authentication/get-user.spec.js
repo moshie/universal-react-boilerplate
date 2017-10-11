@@ -43,6 +43,8 @@ describe('Authentication', () => {
         })
 
         // Should Get a user based on their email
+        // https://semaphoreci.com/community/tutorials/a-tdd-approach-to-building-a-todo-api-using-node-js-and-mongodb
+        // Mock the User model
 
     })
 

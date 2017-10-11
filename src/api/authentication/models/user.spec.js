@@ -10,7 +10,7 @@ describe('User Model', () => {
         password: 'password'
     }
 
-    // https://semaphoreci.com/community/tutorials/a-tdd-approach-to-building-a-todo-api-using-node-js-and-mongodb
+    // TODO: https://semaphoreci.com/community/tutorials/a-tdd-approach-to-building-a-todo-api-using-node-js-and-mongodb
 
     it('should be invalid if email is empty', (done) => {
         var u = new User()
