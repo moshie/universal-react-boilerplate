@@ -1,6 +1,10 @@
 import User from './models/User'
 
 function getUser(email) {
+    if (typeof email !== 'string') {
+        throw new Error('Email must be a string')
+    }
+
     return new Promise((resolve, reject) => {
         User.findOne({ email }, function (error, user) {
             if (error) {
