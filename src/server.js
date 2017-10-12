@@ -19,6 +19,9 @@ app.use(morgan('dev'))
 
 // Database
 mongoose.connect(db.production, { useMongoClient: true })
+mongoose.connection.on('error', () => {
+    throw new Error(`unable to connect to database: ${db.production}`)
+})
 mongoose.Promise = global.Promise
 
 // Http request parser
