@@ -38,7 +38,7 @@ userSchema.pre('save', function (next) {
             this.password = hash
             next()
         })
-        .error((error) => {
+        .catch((error) => {
             if (error instanceof Error) {
                 return next(error)
             }
@@ -50,4 +50,4 @@ userSchema.pre('save', function (next) {
 
 })
 
-export default mongoose.model('User', userSchema)
+export default mongoose.model('user', userSchema)

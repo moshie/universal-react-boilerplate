@@ -1,19 +1,32 @@
-function exists(Model, value, key) {
-    return new Promise((reject, resolve) => {
-        if (typeof key !== 'string' || !key.length) {
-            return reject('Key not defined!')
+import mongoose from 'mongoose'
+
+function exists(Model, search = {}) {
+    return new Promise((resolve, reject) => {
+
+        if (typeof Model !== 'function') {
+            return reject(
+                new Error('Invalid Model')
+            )
         }
 
-        Model.find({ [key]: value }, function (error, docs) {
+        if (Array.isArray(search) || typeof search !== 'object' || !Object.keys(search).length) {
+            return reject(
+                new Error('Invalid search object')
+            )
+        }
+
+        Model.findOne(search, function (error, doc) {
             if (error) {
                 reject(error)
             }
 
-            if (docs.length) {
-                return reject()
+            if (doc == null) {
+                return reject(
+                    new Error(`${Model.collection.name} not found matching your search`)
+                )
             }
             
-            resolve()
+            resolve(doc)
         })
 
     })

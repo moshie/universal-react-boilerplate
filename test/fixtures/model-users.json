@@ -1,0 +1,28 @@
+{
+    "user": [
+        {
+            "email": "batman@example.com",
+            "first_name": "Bruce",
+            "last_name": "Wayne",
+            "password": "b4tm4nIsTh3B3st"
+        },
+        {
+            "email": "iron-man@avengers.com",
+            "first_name": "Tony",
+            "last_name": "Stark",
+            "password": "Bl4ck54bb4th"
+        },
+        {
+            "email": "captain-america@avengers.io",
+            "first_name": "Grant",
+            "last_name": "Rogers",
+            "password": "Am3ric4H3llY34h"
+        },
+        {
+            "email": "fury@avengers.net",
+            "first_name": "Nick",
+            "last_name": "Fury",
+            "password": "H3l1c4rr13r"
+        }
+    ]
+}

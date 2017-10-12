@@ -10,7 +10,7 @@ export default [
         .exists()
         .isEmail().withMessage('Please provide a valid Email')
         .not().isEmpty().withMessage('Email is required')
-        .custom((value, { req }) => exists(User, value, 'email')).withMessage('Email is already in use'),
+        .custom((value, { req }) => exists(User, { 'email': value })).withMessage('Email is already in use'),
 
     check('first_name')
         .exists()
