@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 
 function exists(Model, search = {}) {
     return new Promise((resolve, reject) => {
@@ -17,16 +16,16 @@ function exists(Model, search = {}) {
 
         Model.findOne(search, function (error, doc) {
             if (error) {
-                reject(error)
+                return reject(error)
             }
 
-            if (doc == null) {
+            if (doc !== null) {
                 return reject(
                     new Error(`${Model.collection.name} not found matching your search`)
                 )
             }
             
-            resolve(doc)
+            resolve(true) // https://github.com/ctavan/express-validator/issues/444
         })
 
     })

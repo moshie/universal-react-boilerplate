@@ -91,23 +91,22 @@ describe('#exists()', () => {
             })
     })
 
-    it('should reject if no item was found', () => {
+    it('should resolve if a model was not found', () => {
         return exists(User, { email: 'Example@test.com' })
-            .then((unexpected) => {
-                throw new Error('Unexpected Resolve')
+            .then((exists) => {
+                expect(exists).to.be.true
             }, (error) => {
-                expect(error).instanceof(Error)
-                expect(error.message).to.equal(`${User.collection.name} not found matching your search`)
+                throw new Error('Unexpected Error')
             })
     })
 
-    it('should resolve with the correct model', () => {
+    it('should reject if the model exists', () => {
         return exists(User, { email: fixtures.user[0].email })
-            .then((model) => {
-                expect(model).to.be.an('object')
-                expect(model.email).to.equal(fixtures.user[0].email)
+            .then((resolve) => {
+                throw new Error(`Unexpected Resolve`)
             }, (error) => {
-                throw new Error(`Unexpected Reject ${error.message}`)
+                expect(error).instanceof(Error)
+                expect(error.message).to.equal(`${User.collection.name} not found matching your search`)
             })
     })
 
