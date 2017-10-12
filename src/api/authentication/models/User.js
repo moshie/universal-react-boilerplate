@@ -39,7 +39,7 @@ userSchema.pre('save', function (next) {
             next()
         })
         .catch((error) => {
-            if (error instanceof Error) {
+            if (error) {
                 return next(error)
             }
 
