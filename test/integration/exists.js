@@ -101,15 +101,11 @@ describe('#exists()', () => {
             })
     })
 
-    it('should resolve with the correct user', () => {
+    it('should resolve with the correct model', () => {
         return exists(User, { email: fixtures.user[0].email })
-            .then((user) => {
-                expect(user).to.be.an('object')
-                expect(user.email).to.equal(fixtures.user[0].email)
-                expect(user.first_name).to.equal(fixtures.user[0].first_name)
-                expect(user.last_name).to.equal(fixtures.user[0].last_name)
-                expect(user.created_at).instanceof(Date)
-                expect(user.updated_at).instanceof(Date)
+            .then((model) => {
+                expect(model).to.be.an('object')
+                expect(model.email).to.equal(fixtures.user[0].email)
             }, (error) => {
                 throw new Error(`Unexpected Reject ${error.message}`)
             })

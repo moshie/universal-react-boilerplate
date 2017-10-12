@@ -1,10 +1,10 @@
 import { sign } from 'jsonwebtoken'
 
-import getUser from './get-user'
+import User from './models/User'
 import checkPassword from './check-password'
 
 function authenticate(email, password) {
-    return getUser(email)
+    return User.findOne({ email })
         .then((user) => checkPassword(user, password))
         .then((user) => sign({
             data: { 
