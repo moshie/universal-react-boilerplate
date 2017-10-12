@@ -10,16 +10,16 @@ const clearDB = mochaMongoose(db.testing)
 describe('Authentication', () => {
 
     before((done) => {
-        if (mongoose.connection.db) {
-            return done()
-        }
-
-        mongoose.connect(db.testing, { useMongoClient: true }, done)
+        DB.connect(done)
     })
 
-    before(function(done) {
-        clearDB(done)
-    });
-
+    beforeEach(function(done) {
+        DB.drop((error) => {
+            if (error) {
+                return done(error)
+            }
+            DB.fixtures(fixtures, done)
+        })
+    })
 
 })

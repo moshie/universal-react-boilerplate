@@ -12,7 +12,9 @@ function checkPassword(user, plainTextPassword) {
             }
 
             if (!authenticated) {
-                return reject(new Error('Authentication failed'))
+                return reject(
+                    new Error('Authentication failed')
+                )
             }
 
             resolve(user)
