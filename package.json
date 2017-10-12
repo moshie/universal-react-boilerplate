@@ -45,7 +45,7 @@
     "react-router-dom": "^4.1.2",
     "redux": "^3.7.2",
     "spdy": "^3.4.7",
-    "webpack": "^3.3.0"
+    "webpack": "^3.7.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
