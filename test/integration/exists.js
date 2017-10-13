@@ -1,24 +1,26 @@
+// Vendor
 import { expect } from 'chai'
 
+// Helpers
 import DB from '../database-helpers'
 import fixtures from '../fixtures/model-users'
 
+// Model
 import User from '../../src/api/authentication/models/User'
+
+// Testing
 import exists from '../../src/api/authentication/validation/rules/exists'
 
 describe('#exists()', () => {
 
-    before((done) => {
-        DB.connect(done)
+    before(() => {
+        return DB.connect()
     })
 
-    beforeEach(function(done) {
-        DB.drop((error) => {
-            if (error) {
-                return done(error)
-            }
-            DB.fixtures(fixtures, done)
-        })
+    beforeEach(() => {
+        return DB.drop()
+            .then(() => DB.fixtures(fixtures))
+            .catch((error) => {throw error})
     })
 
     it('should reject if no model was passed', () => {
