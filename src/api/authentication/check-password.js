@@ -1,9 +1,11 @@
 import bcrypt from 'bcrypt'
 
-function checkPassword(user, plainTextPassword) {
+function checkPassword(user = null, plainTextPassword) {
     return new Promise((resolve, reject) => {
         if (user === null) {
-            return reject(new Error('No user assigned to authenticate'))
+            return reject(
+                new Error('No user assigned to authenticate')
+            )
         }
 
         bcrypt.compare(plainTextPassword, user.password, function (error, authenticated) {
