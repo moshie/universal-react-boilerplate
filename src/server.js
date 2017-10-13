@@ -38,7 +38,9 @@ app.use('/api/v1', ApiRoutes)
 app.use(HttpRoutes)
 
 // Start server
-http2.createServer({key, cert}, app)
+var server = http2.createServer({key, cert}, app)
     .listen(port, () => {
         console.log(`Server started on https://localhost:${port}`)
     })
+
+export default server
