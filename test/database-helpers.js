@@ -6,41 +6,50 @@ var state = {
     db: null
 }
 
-exports.connect = (done) => {
+exports.connect = () => {
     if (mongoose.connection.db) {
-        return done()
+        return Promise.resolve()
     }
 
-    mongoose.connect(db.testing, { useMongoClient: true }, done)
+    mongoose.Promise = Promise
+    return mongoose.connect(db.testing, { useMongoClient: true })
 }
 
 exports.getDB = () => state.db
 
-exports.drop = (done) => {
+exports.drop = () => {
     if (!mongoose.connection.db) {
-        return done()
+        return Promise.resolve()
     }
 
-    mongoose.connection.db.dropDatabase(done)
+    return mongoose.connection.db.dropDatabase()
 }
 
-exports.fixtures = (dataset, done) => {
+exports.fixtures = (dataset) => {
     if (!mongoose.connection.db) {
-        return done(
+        return Promise.reject(
             new Error('Missing database connection.')
         )
     }
 
-    var tables = Object.keys(dataset)
-    each(tables, (tableName, cb) => {
-        var model = mongoose.model(tableName)
+    return new Promise((resolve, reject) => {
+        var tables = Object.keys(dataset)
+        each(tables, (tableName, cb) => {
+            var model = mongoose.model(tableName)
 
-        if (model) {
-            model.create(dataset[tableName], function (error) {
-                done(error)
-            })
-        } else {
-            done(new Error(`${tableName} does not exist`))
-        }
+            if (model) {
+                model.create(dataset[tableName], (error) => {
+                    if (error) {
+                        reject(error)
+                    }
+
+                    resolve()
+                })
+            } else {
+                reject(
+                    new Error(`${tableName} does not exist`)
+                )
+            }
+        })
     })
 }
