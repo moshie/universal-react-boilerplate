@@ -1,8 +1,11 @@
+// Vendor
 import chai from 'chai'
-import setDate from '../../src/api/authentication/set-date'
 import dateTime from 'chai-datetime'
 chai.use(dateTime)
 const { expect } = chai
+
+// Testing
+import setDate from '../../src/api/authentication/set-date'
 
 describe('#setDate()', () => {
 

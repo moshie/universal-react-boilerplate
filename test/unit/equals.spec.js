@@ -1,5 +1,7 @@
+// Vendor
 import { expect } from 'chai'
 
+// Testing
 import equals from '../../src/api/authentication/validation/rules/equals'
 
 describe('#equals()', () => {
