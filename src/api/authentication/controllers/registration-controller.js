@@ -11,13 +11,11 @@ export default (request, response) => {
         })
     }
 
-    delete request.body.password_confirmation
-
     var user = new User(request.body)
 
     user.save()
         .then((doc) => {
-            response.json({
+            response.status(200).json({
                 message: `${doc.fullname()} has been Saved successfully!`
             })
         })
