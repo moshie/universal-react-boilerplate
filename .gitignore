@@ -5,6 +5,8 @@
 # Built Assets
 dist/
 static/bundle.js
+/coverage
+/.nyc_output
 
 # Task Runners & Compilers
 /.sass-cache

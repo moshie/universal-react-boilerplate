@@ -11,9 +11,15 @@
     "dev": "npm-run-all --parallel watch:*",
     "watch:webpack": "webpack -w",
     "watch:server": "nodemon ./src/server.js --exec babel-node --ext js,jsx --ignore public/",
-    "test": "mocha --recursive --require babel-core/register --exit"
+    "test": "cross-env NODE_ENV=test nyc mocha 'test/**/*.spec.js' --exit"
   },
-  "main": "server.js",
+  "nyc": {
+    "require": ["babel-register"],
+    "reporter": ["lcov"],
+    "sourceMap": false,
+    "instrument": false
+  },
+  "main": "./dist/server.js",
   "keywords": [
     "universal",
     "isomorphic",
@@ -32,12 +38,13 @@
     "bcrypt": "^1.0.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
+    "cross-env": "^5.0.5",
     "express": "4.13.4",
     "express-validator": "^4.2.1",
     "jsonwebtoken": "^8.1.0",
-    "mongoose": "^4.12.1",
+    "mongoose": "^4.12.2",
     "morgan": "^1.9.0",
-    "nodemailer": "^4.1.3",
+    "nodemailer": "^4.2.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^4.4.8",
@@ -48,6 +55,7 @@
     "webpack": "^3.7.1"
   },
   "devDependencies": {
+    "babel-plugin-istanbul": "^4.1.5",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-datetime": "^1.5.0",
@@ -55,6 +63,7 @@
     "mocha": "^4.0.1",
     "nodemon": "1.11.0",
     "npm-run-all": "3.1.2",
+    "nyc": "^10.3.2",
     "sinon": "^4.0.1"
   },
   "license": "MIT"
