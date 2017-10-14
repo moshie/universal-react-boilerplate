@@ -14,3 +14,7 @@ exports.db = {
     staging: process.env.MONGODB || 'mongodb://127.0.0.1:27017/staging',
     testing: 'mongodb://127.0.0.1:27017/testing'
 }
+
+exports.api = '/api/v1'
+
+exports.isDevelopment = process.env.NODE_ENV == 'development'

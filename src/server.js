@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import express from 'express'
 import morgan from 'morgan'
 import http2 from 'spdy'
-import { port, key, cert, db } from './config'
+import { port, key, cert, db, api, isDevelopment } from './config'
 import ApiRoutes from './api/routes'
 import HttpRoutes from './http/routes'
 import Promise from 'bluebird'
@@ -15,7 +15,9 @@ const app = express()
 global.Promise = Promise
 
 // Logger
-app.use(morgan('dev'))
+if (isDevelopment) {
+    app.use(morgan('dev'))
+}
 
 // Database
 mongoose.connect(db.production, { useMongoClient: true })
@@ -32,7 +34,7 @@ app.use(bodyParser.json())
 app.use(express.static('static'))
 
 // Api endpoints
-app.use('/api/v1', ApiRoutes)
+app.use(api, ApiRoutes)
 
 // Http routes
 app.use(HttpRoutes)
@@ -43,4 +45,4 @@ var server = http2.createServer({key, cert}, app)
         console.log(`Server started on https://localhost:${port}`)
     })
 
-export default server
+export default app
