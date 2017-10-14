@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 
-function checkPassword(user = null, plainTextPassword) {
+function checkPassword(user = null, plainTextPassword = '') {
     return new Promise((resolve, reject) => {
         if (user === null) {
             return reject(
