@@ -14,13 +14,11 @@ const userFixture = {
     "password_confirmation": "b4tm4nIsTh3B3st"
 }
 
-const _validationErrors = [{ 
-    location: 'body',
-    param: 'email',
-    value: '',
-    msg: 'Please provide a valid Email' 
-}]
-
+const allErrors = [
+    { param: 'foo', msg: 'blabla' },
+    { param: 'foo', msg: 'watwat' },
+    { param: 'bar', msg: 'yay' }
+]
 
 describe('Registration Controller', () => {
 
@@ -37,7 +35,7 @@ describe('Registration Controller', () => {
     })
 
     it('should return a 422 response', () => {
-        let req = { _validationErrors }
+        let req = { _validationErrors: allErrors }
         let res = {
             status: function (responseCode) {
                 expect(responseCode).to.be.a('number')
@@ -51,13 +49,16 @@ describe('Registration Controller', () => {
     })
 
     it('should return an object with validation results', () => {
-        var req = { _validationErrors }
+        var req = { _validationErrors: allErrors }
         var res = {
             status: function () { return this },
             json: function (json) {
                 expect(json).to.be.an('object')
                 expect(json).to.have.own.property('errors')
-                expect(json.errors).to.have.property('email')
+                expect(json.errors).to.eql({
+                    foo: { param: 'foo', msg: 'blabla' },
+                    bar: { param: 'bar', msg: 'yay' }
+                })
             }
         }
 
