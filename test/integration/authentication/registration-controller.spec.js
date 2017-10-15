@@ -44,7 +44,7 @@ describe('Registration Controller', () => {
                 expect(responseCode).to.equal(422)
                 return this
             },
-            json: function () {}
+            json: function () { return this }
         }
 
         registrationController(req, res)
