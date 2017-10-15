@@ -26,7 +26,7 @@ describe('#exists()', () => {
     it('should reject with error if a user was found with the same email', () => {
         user.yields(null, userFixtures[0])
 
-        exists(User, { email: 'test@example.com' })
+        return exists(User, { email: 'test@example.com' })
             .then(() => {
                 throw new Error('Unexpected resolve')
             }, (error) => {
@@ -35,11 +35,20 @@ describe('#exists()', () => {
             })
     })
 
-    it('should resolve if no user exists with the same email')
+    it('should resolve true if no user exists with the same email', () => {
+        user.yields(null, null)
 
-    it('should resolve with true')
+        return exists(User, { email: 'test@example.com' })
+            .then((resolve) => {
+                expect(resolve).to.be.true
+            }, (error) => {
+                throw new Error('Unexpected reject')
+            })
+    })
 
-    it('should reject with error if an invalid model was provided')
+    it('should reject with error if an invalid model was provided', () => {
+        
+    })
 
     it('should reject with error if the search object is invalid')
 
