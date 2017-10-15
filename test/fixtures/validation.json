@@ -1,0 +1,14 @@
+[
+    { 
+        "param": "foo", 
+        "msg": "blabla" 
+    },
+    { 
+        "param": "foo", 
+        "msg": "watwat"
+    },
+    { 
+        "param": "bar",
+        "msg": "yay"
+    }
+]
