@@ -1,5 +1,6 @@
 import { validationResult } from 'express-validator/check'
 import User from '../models/User'
+import { sign } from 'jsonwebtoken'
 
 export default (request, response) => {
     const errors = validationResult(request)
@@ -14,9 +15,14 @@ export default (request, response) => {
     var user = new User(request.body)
 
     user.save()
-        .then((doc) => {
+        .then((user) => sign({
+            data: { email: user.email },
+            exp: 1440 // expires in 24 hours
+        }, 'secret'))
+        .then((token) => {
             response.status(200).json({
-                message: `${doc.fullname()} has been Saved successfully!`
+                message: `user saved successfully!`,
+                token: token
             })
         })
         .catch((error) => {
