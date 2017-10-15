@@ -2,40 +2,34 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
 
+// Testing
 import registrationController from '../../../src/api/authentication/controllers/registration-controller'
 
+// Dependencies
 import User from '../../../src/api/authentication/models/User'
+import jwt from 'jsonwebtoken'
 
-const userFixture = {
-    "email": "batman@example.com",
-    "first_name": "Bruce",
-    "last_name": "Wayne",
-    "password": "b4tm4nIsTh3B3st",
-    "password_confirmation": "b4tm4nIsTh3B3st"
-}
-
-const allErrors = [
-    { param: 'foo', msg: 'blabla' },
-    { param: 'foo', msg: 'watwat' },
-    { param: 'bar', msg: 'yay' }
-]
+// Fixtures
+import userFixtures from '../../fixtures/model-users'
+import validationFixture from '../../fixtures/validation'
 
 describe('Registration Controller', () => {
 
-    var user
+    var user,
+        sign
 
     beforeEach(() => {
-        user = sinon.stub(User.prototype, 'save').resolves({
-            fullname: function () {}
-        })
+        sign = sinon.stub(jwt, 'sign').returns('Iamatoken')
+        user = sinon.stub(User.prototype, 'save')
     })
 
     afterEach(() => {
+        sign.restore()
         user.restore()
     })
 
     it('should return a 422 response', () => {
-        let req = { _validationErrors: allErrors }
+        let req = { _validationErrors: validationFixture }
         let res = {
             status: function (responseCode) {
                 expect(responseCode).to.be.a('number')
@@ -49,7 +43,7 @@ describe('Registration Controller', () => {
     })
 
     it('should return an object with validation results', () => {
-        var req = { _validationErrors: allErrors }
+        var req = { _validationErrors: validationFixture }
         var res = {
             status: function () { return this },
             json: function (json) {
@@ -66,8 +60,10 @@ describe('Registration Controller', () => {
     })
 
     it('should return a 200 response', () => {
-        
-        var req = { body: userFixture }
+        user.resolves({
+            fullname: function () {}
+        })
+        var req = { body: userFixtures[0] }
         var res = {
             json: function () { return this },
             status: sinon.stub().returnsThis()
@@ -76,18 +72,55 @@ describe('Registration Controller', () => {
         registrationController(req, res)
 
         return user()
+            .then(() => sign)
             .then(() => {
-                expect(res.status.called).to.be.true
+                expect(res.status.calledOnce).to.be.true
                 expect(res.status.firstCall.args[0]).to.be.a('number')
                 expect(res.status.firstCall.args[0]).to.equal(200)
             })
 
     })
 
-    it('should save the user')
+    it('should return the jwt token', () => {
+        user.resolves({
+            fullname: function () {}
+        })
+        var req = { body: userFixtures[0] }
+        var res = {
+            json: sinon.stub().returnsThis(),
+            status: function () { return this }
+        }
 
-    it('should return the jwt token')
+        registrationController(req, res)
 
-    it('should return 500 when another error occurs')
+        return user()
+            .then(() => sign.resolves('Iamatoken'))
+            .then(() => {
+                expect(res.json.calledOnce).to.be.true
+                expect(res.json.firstCall.args[0]).to.be.an('object')
+                expect(res.json.firstCall.args[0].token).to.be.a('string')
+            })
+    })
+
+    it('should return 500 when another error occurs', () => {
+        user.rejects(
+            new Error('I am a potential error')
+        )
+        var req = { body: userFixtures[0] }
+        var res = {
+            json: sinon.stub().returnsThis(),
+            status: function () { return this }
+        }
+
+        registrationController(req, res)
+
+        return user()
+            .then(() => {
+                throw new Error('Unexpected Resolve')
+            }, (error) => {
+                expect(error).instanceof(Error)
+                expect(error.message).to.equal('I am a potential error')
+            })
+    })
 
 })
