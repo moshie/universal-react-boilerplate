@@ -1,6 +1,10 @@
 // Vendor
-import { expect } from 'chai'
+import chai from 'chai'
+import chaiAsPromised from 'chai-as-promised'
 import sinon from 'sinon'
+
+chai.use(chaiAsPromised)
+const { expect } = chai
 
 // Helpers
 import userFixtures from '../../fixtures/model-users'
@@ -26,28 +30,23 @@ describe('#exists()', () => {
     it('should reject with error if a user was found with the same email', () => {
         user.yields(null, userFixtures[0])
 
-        return exists(User, { email: 'test@example.com' })
-            .then(() => {
-                throw new Error('Unexpected resolve')
-            }, (error) => {
-                expect(error).instanceof(Error)
-                expect(error.message).to.equal(`${User.collection.name} not found matching your search`)
-            })
+        return expect(
+            exists(User, { email: 'test@example.com' })
+        ).to.be.rejectedWith(Error, `${User.collection.name} not found matching your search`)
     })
 
     it('should resolve true if no user exists with the same email', () => {
         user.yields(null, null)
 
-        return exists(User, { email: 'test@example.com' })
-            .then((resolve) => {
-                expect(resolve).to.be.true
-            }, (error) => {
-                throw new Error('Unexpected reject')
-            })
+        return expect(
+            exists(User, { email: 'test@example.com' })
+        ).to.eventually.be.true
     })
 
     it('should reject with error if an invalid model was provided', () => {
-        
+        return expect(
+            exists()
+        ).to.be.rejectedWith(Error, 'Invalid Model')
     })
 
     it('should reject with error if the search object is invalid')
