@@ -49,8 +49,21 @@ describe('#exists()', () => {
         ).to.be.rejectedWith(Error, 'Invalid Model')
     })
 
-    it('should reject with error if the search object is invalid')
+    it('should reject with error if the search object is invalid', () => {
+        return Promise.all([
+            expect(exists(User, [])).to.be.rejectedWith(Error, 'Invalid search object'),
+            expect(exists(User, '')).to.be.rejectedWith(Error, 'Invalid search object'),
+            expect(exists(User, {})).to.be.rejectedWith(Error, 'Invalid search object'),
+            expect(exists(User, 12)).to.be.rejectedWith(Error, 'Invalid search object')
+        ]);
+    })
 
-    it('should reject in the result an error occurs with the error')
+    it('should reject if an error occurs and return the error', () => {
+        user.yields(new Error('I am a potential error'), null)
+
+        return expect(
+            exists(User, { email: 'test@example.com' })
+        ).to.be.rejectedWith(Error, 'I am a potential error')
+    })
 
 })
