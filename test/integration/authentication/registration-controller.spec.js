@@ -1,6 +1,10 @@
 // Vendor
-import { expect } from 'chai'
+import chai from 'chai'
+import chaiAsPromised from 'chai-as-promised'
 import sinon from 'sinon'
+
+chai.use(chaiAsPromised)
+const { expect } = chai
 
 // Testing
 import registrationController from '../../../src/api/authentication/controllers/registration-controller'
@@ -114,13 +118,10 @@ describe('Registration Controller', () => {
 
         registrationController(req, res)
 
-        return user()
-            .then(() => {
-                throw new Error('Unexpected Resolve')
-            }, (error) => {
-                expect(error).instanceof(Error)
-                expect(error.message).to.equal('I am a potential error')
-            })
+        return expect(
+            user()
+        ).to.be.rejectedWith(Error, 'I am a potential error')
+
     })
 
 })
