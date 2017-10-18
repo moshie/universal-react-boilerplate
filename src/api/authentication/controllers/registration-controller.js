@@ -6,9 +6,8 @@ export default (request, response) => {
     const errors = validationResult(request)
 
     if (!errors.isEmpty()) {
-        // TODO: Create a response class to handle validation errors
         return response.status(422).json({
-            errors: errors.mapped() 
+            errors: errors.mapped()
         })
     }
 
@@ -21,13 +20,15 @@ export default (request, response) => {
         }, 'secret'))
         .then((token) => {
             response.status(200).json({
-                message: `user saved successfully!`,
-                token: token
+                data: {
+                    message: 'user saved successfully!',
+                    token: token
+                }
             })
         })
         .catch((error) => {
             response.status(500).json({
-                message: error.message
+                errors: error.message
             })
         })
 

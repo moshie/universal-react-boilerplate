@@ -13,13 +13,12 @@ export default (request, response) => {
     authenticate(request.body.email, request.body.password)
         .then((token) => {
             response.json({
-                status: 'ok',
-                token
+                data: { token }
             })
         })
         .catch((error) => {
             response.status(400).json({
-                status: error.message
+                errors: error.message
             })
         })
 
