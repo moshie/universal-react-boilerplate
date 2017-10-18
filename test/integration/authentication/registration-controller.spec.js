@@ -102,7 +102,7 @@ describe('Registration Controller', () => {
             .then(() => {
                 expect(res.json.calledOnce).to.be.true
                 expect(res.json.firstCall.args[0]).to.be.an('object')
-                expect(res.json.firstCall.args[0].token).to.be.a('string')
+                expect(res.json.firstCall.args[0].data.token).to.be.a('string')
             })
     })
 
