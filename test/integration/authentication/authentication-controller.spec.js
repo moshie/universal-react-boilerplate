@@ -9,9 +9,6 @@ const { expect } = chai
 // Testing
 import authenticationController from '../../../src/api/authentication/controllers/authentication-controller'
 
-// Dependencies
-import authenticate from '../../../src/api/authentication/authenticate'
-
 // Fixtures
 import validationFixture from '../../fixtures/validation'
 import userFixtures from '../../fixtures/model-users'
@@ -90,6 +87,7 @@ describe('Authentication Controller', () => {
             json: function (json) {
                 expect(res.json.data).to.be.an('object')
                 expect(res.json.data.token).to.be.a('string')
+                expect(res.json.data.token).to.equal('Iamatoken')
             }
         }
 
